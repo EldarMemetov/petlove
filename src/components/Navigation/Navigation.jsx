@@ -8,9 +8,6 @@ export default function Navigation() {
 
   return (
     <nav className={s.nav}>
-      <NavLink to="/" className={makeNavLinkClass}>
-        Logo
-      </NavLink>
       <NavLink to="/news" className={makeNavLinkClass}>
         News
       </NavLink>
