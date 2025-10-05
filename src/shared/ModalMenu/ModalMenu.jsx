@@ -1,16 +1,12 @@
 import ReactModal from 'react-modal';
 import { useEffect } from 'react';
-import styles from './Modal.module.scss';
+import styles from './ModalMenu.module.scss';
 
 ReactModal.setAppElement('#root');
 
-export default function Modal({ isOpen, onClose, title, children }) {
+export default function ModalMenu({ isOpen, onClose, title, children }) {
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+    document.body.style.overflow = isOpen ? 'hidden' : '';
     return () => {
       document.body.style.overflow = '';
     };
@@ -21,14 +17,15 @@ export default function Modal({ isOpen, onClose, title, children }) {
       isOpen={isOpen}
       onRequestClose={onClose}
       overlayClassName={styles.overlay}
-      className={styles.content}
+      className={styles.sidebar}
+      closeTimeoutMS={300}
     >
       <button className={styles.closeButton} onClick={onClose}>
-        <svg width="24" height="24" aria-label="Close modal">
+        <svg width="32" height="32" aria-label="Close modal">
           <use href="/icon/sprite.svg#icon-close" />
         </svg>
       </button>
-      <h2 className={styles.modalTitle}>{title}</h2>
+      {title && <h2 className={styles.modalTitle}>{title}</h2>}
       <div className={styles.modalBody}>{children}</div>
     </ReactModal>
   );
