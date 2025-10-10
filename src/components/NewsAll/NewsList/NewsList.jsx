@@ -1,28 +1,37 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchAll } from '../../../redux/news/operations';
-import { selectNews, selectLoading } from '../../../redux/news/selectors';
 import NewsItem from '../NewsItem/NewsItem';
+import noImage from '../../../../public/image/image.png';
+import Loading from '../../../shared/Loading/Loading';
 
-export default function NewsList({ keyword, page, limit }) {
-  const dispatch = useDispatch();
-  const news = useSelector(selectNews);
-  const loading = useSelector(selectLoading);
-
-  useEffect(() => {
-    dispatch(fetchAll({ keyword, page, limit }));
-  }, [dispatch, keyword, page, limit]);
-
-  if (loading) return <p>Loading...</p>;
+export default function NewsList({ news, loading }) {
+  if (loading) return <Loading />;
   if (!news.length) return <p>No news available.</p>;
 
   return (
     <ul className="news-list">
-      {news.map((item) => (
-        <li key={item._id}>
-          <NewsItem {...item} />
-        </li>
-      ))}
+      {news.map((item) => {
+        const headline = item.headline?.main ?? 'Untitled';
+        const text =
+          item.lead_paragraph || item.snippet || 'No description available.';
+        const date = item.pub_date ?? null;
+        const url = item.web_url ?? '#';
+        const imgUrl = item.multimedia?.length
+          ? item.multimedia[0].url.startsWith('http')
+            ? item.multimedia[0].url
+            : `https://static01.nyt.com/${item.multimedia[0].url}`
+          : noImage;
+
+        return (
+          <li key={item._id}>
+            <NewsItem
+              title={headline}
+              text={text}
+              date={date}
+              url={url}
+              imgUrl={imgUrl}
+            />
+          </li>
+        );
+      })}
     </ul>
   );
 }

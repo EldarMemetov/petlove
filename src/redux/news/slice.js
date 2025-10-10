@@ -6,6 +6,7 @@ const initialState = {
   currentNews: null,
   loading: false,
   error: null,
+  totalPages: 0,
 };
 
 const newsSlice = createSlice({
@@ -21,8 +22,10 @@ const newsSlice = createSlice({
       })
       .addCase(fetchAll.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = action.payload ?? [];
+        state.items = action.payload.results ?? [];
+        state.totalPages = action.payload.totalPages ?? 0;
       })
+
       .addCase(fetchAll.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload ?? 'Unknown error';

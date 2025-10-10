@@ -5,7 +5,7 @@ export default function SearchField({ onSearch }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSearch(value.trim());
+    onSearch(value);
   };
 
   const handleClear = () => {
@@ -14,7 +14,7 @@ export default function SearchField({ onSearch }) {
   };
 
   return (
-    <form className="search-field" onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="search-field">
       <input
         type="text"
         value={value}
@@ -22,13 +22,11 @@ export default function SearchField({ onSearch }) {
         placeholder="Search..."
       />
       {value && (
-        <button type="button" className="clear-btn" onClick={handleClear}>
+        <button type="button" onClick={handleClear}>
           ✕
         </button>
       )}
-      <button type="submit" className="search-btn">
-        🔍
-      </button>
+      <button type="submit">🔍</button>
     </form>
   );
 }

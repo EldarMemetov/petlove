@@ -1,10 +1,15 @@
 export default function Pagination({ page, totalPages, onPageChange }) {
+  if (totalPages <= 1) return null;
+
   const getPages = () => {
     const pages = [];
     if (totalPages <= 5) {
       for (let i = 1; i <= totalPages; i++) pages.push(i);
     } else {
-      pages.push(1, 2, 3, '...', totalPages);
+      if (page <= 3) pages.push(1, 2, 3, '...', totalPages);
+      else if (page >= totalPages - 2)
+        pages.push(1, '...', totalPages - 2, totalPages - 1, totalPages);
+      else pages.push(1, '...', page - 1, page, page + 1, '...', totalPages);
     }
     return pages;
   };
@@ -17,21 +22,16 @@ export default function Pagination({ page, totalPages, onPageChange }) {
       <button onClick={() => onPageChange(page - 1)} disabled={page === 1}>
         {'<'}
       </button>
-
-      {getPages().map((p, i) =>
-        p === '...' ? (
-          <span key={i}>...</span>
-        ) : (
-          <button
-            key={i}
-            className={p === page ? 'active' : ''}
-            onClick={() => onPageChange(p)}
-          >
-            {p}
-          </button>
-        )
-      )}
-
+      {getPages().map((p, idx) => (
+        <button
+          key={idx}
+          disabled={p === '...'}
+          className={p === page ? 'active' : ''}
+          onClick={() => typeof p === 'number' && onPageChange(p)}
+        >
+          {p}
+        </button>
+      ))}
       <button
         onClick={() => onPageChange(page + 1)}
         disabled={page === totalPages}
