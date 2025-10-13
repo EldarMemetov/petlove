@@ -39,8 +39,6 @@ export default function News() {
 
   return (
     <div className="news-page">
-      <h1>News Page</h1>
-
       <SearchField onSearch={handleSearch} />
       <NewsList news={news} loading={loading} />
 

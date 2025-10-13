@@ -1,3 +1,5 @@
+import s from './Pagination.module.scss';
+
 export default function Pagination({ page, totalPages, onPageChange }) {
   if (totalPages <= 1) return null;
 
@@ -15,30 +17,44 @@ export default function Pagination({ page, totalPages, onPageChange }) {
   };
 
   return (
-    <div className="pagination">
-      <button onClick={() => onPageChange(1)} disabled={page === 1}>
+    <div className={s.pagination}>
+      <button
+        className={s.button}
+        onClick={() => onPageChange(1)}
+        disabled={page === 1}
+      >
         {'<<'}
       </button>
-      <button onClick={() => onPageChange(page - 1)} disabled={page === 1}>
+
+      <button
+        className={s.button}
+        onClick={() => onPageChange(page - 1)}
+        disabled={page === 1}
+      >
         {'<'}
       </button>
+
       {getPages().map((p, idx) => (
         <button
           key={idx}
           disabled={p === '...'}
-          className={p === page ? 'active' : ''}
+          className={`${s.button} ${p === page ? s.active : ''}`}
           onClick={() => typeof p === 'number' && onPageChange(p)}
         >
           {p}
         </button>
       ))}
+
       <button
+        className={s.button}
         onClick={() => onPageChange(page + 1)}
         disabled={page === totalPages}
       >
         {'>'}
       </button>
+
       <button
+        className={s.button}
         onClick={() => onPageChange(totalPages)}
         disabled={page === totalPages}
       >

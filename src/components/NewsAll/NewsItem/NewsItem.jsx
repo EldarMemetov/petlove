@@ -1,3 +1,4 @@
+import s from './NewsItem.module.scss';
 import noImage from '../../../../public/image/image.png';
 
 export default function NewsItem({ imgUrl, title, text, date, url }) {
@@ -7,8 +8,9 @@ export default function NewsItem({ imgUrl, title, text, date, url }) {
       : 'Date not available';
 
   return (
-    <div className="news-item">
+    <article className={s.articles}>
       <img
+        className={s.image}
         src={imgUrl || noImage}
         alt={title || 'News image'}
         onError={(e) => {
@@ -16,13 +18,21 @@ export default function NewsItem({ imgUrl, title, text, date, url }) {
           e.currentTarget.src = noImage;
         }}
       />
-
-      <h2>{title ?? 'Untitled'}</h2>
-      <p>{text ?? 'No description available.'}</p>
-      <p>{formattedDate}</p>
-      <a href={url ?? '#'} target="_blank" rel="noopener noreferrer">
-        Read More
-      </a>
-    </div>
+      <h2 className={s.title}>{title || 'Untitled'}</h2>
+      <p className={s.text}>{text || 'No description available.'}</p>
+      <div className={s.containerLink}>
+        <div className={s.containerDate}>
+          <p className={s.date}>{formattedDate}</p>
+          <a
+            href={url || '#'}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={s.link}
+          >
+            Read More
+          </a>
+        </div>
+      </div>
+    </article>
   );
 }

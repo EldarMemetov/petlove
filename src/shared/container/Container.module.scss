@@ -1,7 +1,7 @@
 @use '../styles/mixins' as *;
 
 .container {
-  padding: 0 12px;
+  padding: 0 20px;
   margin: 0 auto;
   @include media(mobile) {
     width: $mobile;
@@ -10,11 +10,11 @@
 
   @include media(tablet) {
     width: $tablet;
-    padding: 0 20px;
+    padding: 0 32px;
   }
 
   @include media(desktop) {
     width: $desktop;
-    padding: 0 80px;
+    padding: 0 64px;
   }
 }
